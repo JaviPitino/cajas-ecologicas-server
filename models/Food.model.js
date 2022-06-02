@@ -7,11 +7,11 @@ const foodSchema = new Schema(
       type: String,
       required: true
     },
-    type:{
+    type:[{
       type: String,
-      enum: ["Fruta", "Verdura"],
+      enum: ["Fruta", "Verdura", "Tubérculo", "Hongo"],
       required: true,
-    },
+    }],
     season:[{
       type: String,
       enum: ["Invierno", "Primavera", "Verano", "Otoño"],
