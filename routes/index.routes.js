@@ -12,4 +12,7 @@ router.use('/auth', authRoutes)
 const foodRoutes = require ('./food.routes')
 router.use('/alimentos', foodRoutes)
 
+const farmerRoutes = require ('./farmer.routes')
+router.use('/agricultores', farmerRoutes)
+
 module.exports = router;
