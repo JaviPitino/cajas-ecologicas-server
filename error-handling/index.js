@@ -9,6 +9,11 @@ module.exports = (app) => {
     // always logs the error
     console.error("ERROR", req.method, req.path, err);
 
+    //! Handler para la autenticación del token
+    if(err.status === 401){
+      res.status(401).json({errorMessage: "Credenciales no han podido ser validadas"})
+    }
+
     // only render if the error ocurred before sending the response
     if (!res.headersSent) {
       res
