@@ -1,8 +1,9 @@
 const router = require("express").Router();
 const FoodModel = require("../models/Food.model.js")
+const uploader = require("../middlewares/uploader")
 
 //GET '/api/alimentos' => Renderizamos la lista de alimentos
-router.get('/alimentos', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     // Seleccionamos las comidas a mostrar por nombre
     const response = await FoodModel.find().select("name")
@@ -13,7 +14,7 @@ router.get('/alimentos', async (req, res, next) => {
 })
 
 // POST '/api/alimentos => Añadir un nuevo alimento
-router.post('/alimentos',uploader.single("image"), async (req, res, next) => {
+router.post('/',uploader.single("image"), async (req, res, next) => {
   const { name, type, season} = req.body
   try {
     //Controlamos que el alimento no se repita por nombre
@@ -36,7 +37,7 @@ router.post('/alimentos',uploader.single("image"), async (req, res, next) => {
 })
 
 //GET '/api/alimentos/:id => Mostramos detalles del alimento
-router.get('/alimentos/:id', async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
   const{ id } = req.params //*Requerimos la id del Params
   try {
     //Buscamos el alimento a mostrar por su Id
@@ -48,7 +49,7 @@ router.get('/alimentos/:id', async (req, res, next) => {
 })
 
 //PATCH '/api/alimentos/:id/edit' => Editamos el alimento
-router.patch('/alimentos/:id/edit', uploader.single("image"), async (req, res, next) => {
+router.patch('/:id/edit', uploader.single("image"), async (req, res, next) => {
   const { id } = req.params
   const { name, type, season } = req.body
 
@@ -66,7 +67,7 @@ router.patch('/alimentos/:id/edit', uploader.single("image"), async (req, res, n
 })
 
 //DELETE '/api/alimentos/:id/delete' => Borrado de un alimento de nuestr lista
-router.delete('/alimento/:id/delete', async (req, res, next) => {
+router.delete('/:id/delete', async (req, res, next) => {
   const { id } = req.params
   try{
     await FoodModel.findByIdAndDelete(id)
