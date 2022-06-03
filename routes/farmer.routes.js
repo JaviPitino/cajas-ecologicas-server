@@ -24,5 +24,21 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
+// GET '/api/agricltores/:id/cajas -> Renderizamos las cajas de cada agricultor
+router.get('/:id/cajas', async (req, res, next) => {
+
+  const { id } = req.params
+
+  try {
+
+    
+
+
+
+  } catch(error) { next(error) }
+
+})
+
+
 
 module.exports = router;

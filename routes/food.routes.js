@@ -48,7 +48,7 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-//PATCH '/api/alimentos/:id/edit' => Editamos el alimento
+//PATCH '/api/alimentos/:id' => Editamos el alimento
 router.patch('/:id', uploader.single("image"), async (req, res, next) => {
   const { id } = req.params
   const { name, type, season } = req.body
@@ -66,7 +66,7 @@ router.patch('/:id', uploader.single("image"), async (req, res, next) => {
   }
 })
 
-//DELETE '/api/alimentos/:id/delete' => Borrado de un alimento de nuestr lista
+//DELETE '/api/alimentos/:id' => Borrado de un alimento de nuestr lista
 router.delete('/:id', async (req, res, next) => {
   const { id } = req.params
   try{
