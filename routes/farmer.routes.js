@@ -34,7 +34,7 @@ router.get('/:id/cajas', async (req, res, next) => {
   try {
 
     const response = await UserModel.findByIdAndUpdate( _id, {
-      $addToSet: { boxes: id }, farmer
+      $addToSet: { boxes: id }
     })
     console.log("Response es:", response)
     res.json(response)
