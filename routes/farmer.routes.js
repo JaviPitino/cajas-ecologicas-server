@@ -1,8 +1,6 @@
 const router = require("express").Router()
 const UserModel = require("../models/User.model")
 
-//Rutas para mostrar la lista de Agricultores
-
 //GET '/api/agricultores' => Renderizamos la lista de Agricultores para los Clientes
 router.get('/', async (req, res, next) => {
   try {
