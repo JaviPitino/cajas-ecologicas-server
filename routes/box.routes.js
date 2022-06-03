@@ -38,7 +38,7 @@ router.get("/:id", async (req, res, next) => {
 })
 
 // PATCH ‘/api/cajas/:id/edit’ -> Editamos Caja
-router.patch('/:id/edit', async (req, res, next) => {
+router.patch('/:id', async (req, res, next) => {
   const { id } = req.params
   const { name, boxmodel, foods, price } = req.body
 
@@ -54,7 +54,7 @@ router.patch('/:id/edit', async (req, res, next) => {
 })
 
 // DELETE '/api/caja/:id/delete -> Borramos caja
-router.delete('/:id/delete', async (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
 
   const { id } = req.params
 

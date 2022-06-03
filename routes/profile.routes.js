@@ -32,5 +32,4 @@ router.post("/", uploader.single("image"), async (req, res, next) =>{
     } catch(error) { next(error) }
 })
 
-
 module.exports = router;
