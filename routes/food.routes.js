@@ -6,7 +6,7 @@ const uploader = require("../middlewares/uploader")
 router.get('/', async (req, res, next) => {
   try {
     // Seleccionamos las comidas a mostrar por nombre
-    const response = await FoodModel.find().select("name")
+    const response = await FoodModel.find()
     res.json(response)
   } catch (error) {
     next(error)

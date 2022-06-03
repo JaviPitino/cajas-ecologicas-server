@@ -25,17 +25,15 @@ router.get('/:id', async (req, res, next) => {
 })
 
 // GET '/api/agricultores/:id/cajas -> Renderizamos las cajas de cada agricultor
-router.get('/:id/cajas', async (req, res, next) => {
+router.get('/cajas', async (req, res, next) => {
 
-  const { id } = req.params
+  // const { id } = req.params
   const { _id } = req.payload
   // const farmer = "6299ddac8b02bdd00f6090ce"
 
   try {
 
-    const response = await UserModel.findByIdAndUpdate( _id, {
-      $addToSet: { boxes: id }
-    })
+    const response = await UserModel.findById( _id ).select("boxes")
     console.log("Response es:", response)
     res.json(response)
 
