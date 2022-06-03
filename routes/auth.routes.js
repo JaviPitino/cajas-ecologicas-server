@@ -47,6 +47,7 @@ router.post("/signup", async (req, res, next) => {
       email,
       password: hashPassword,
     });
+    res.status(201).json()
   } catch (error) {
     next(error);
   }
