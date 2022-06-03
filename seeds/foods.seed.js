@@ -26,7 +26,7 @@ const foods = [
   },
   {
     "name": "Nectarina",
-    "image": "https://res.cloudinary.com/dikww9ljc/image/upload/v1654176558/EcoFood/05nectarina_cqodel.png",
+    "image": "https://res.cloudinary.com/dikww9ljc/image/upload/v1654278810/EcoFood/05nectarina_rsuo1n.png",
     "type": "Fruta",
     "season": ["Primavera", "Verano"]
   },
@@ -56,7 +56,7 @@ const foods = [
   },
   {
     "name": "Piña",
-    "image": "https://res.cloudinary.com/dikww9ljc/image/upload/v1654176558/EcoFood/10pi%C3%B1a_fcfwl6.png",
+    "image": "https://res.cloudinary.com/dikww9ljc/image/upload/v1654278810/EcoFood/10pi%C3%B1a_pewkev.png",
     "type": "Fruta",
     "season": ["Otoño", "Invierno"]
   },
