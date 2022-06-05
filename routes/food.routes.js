@@ -44,7 +44,7 @@ router.get('/:id', async (req, res, next) => {
     const response = await FoodModel.findById(id)
     res.json(response)
   } catch (error) {
-    
+    next(error)
   }
 })
 

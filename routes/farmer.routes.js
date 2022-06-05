@@ -1,5 +1,6 @@
 const router = require("express").Router()
 const UserModel = require("../models/User.model")
+const isAuthenticated = require("../middlewares/isAuthenticated")
 
 //GET '/api/agricultores' => Renderizamos la lista de Agricultores para los Clientes
 router.get('/', async (req, res, next) => {
@@ -11,9 +12,9 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-//GET '/api/agricultores/:id' => Mostramos los detalles del Agricultor
-router.get('/:id', async (req, res, next) => {
-  const { id } = req.params
+//GET '/api/agricultor => Mostramos los detalles del Agricultor
+router.get('/',isAuthenticated, async (req, res, next) => { 
+  const { id } = req.payload
   
   try {
     const response = await UserModel.findById(id)  
@@ -25,7 +26,7 @@ router.get('/:id', async (req, res, next) => {
 })
 
 // GET '/api/agricultores/:id/cajas -> Renderizamos las cajas de cada agricultor
-router.get('/cajas', async (req, res, next) => {
+router.get('/cajas',isAuthenticated, async (req, res, next) => {
 
   // const { id } = req.params
   const { _id } = req.payload

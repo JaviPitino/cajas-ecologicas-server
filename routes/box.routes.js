@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const isAuthenticated = require("../middlewares/isAuthenticated");
 const BoxModel = require("../models/Box.model");
 const FoodModel = require ('../models/Food.model')
 
@@ -22,10 +23,13 @@ router.post("/create", async (req, res, next) => {
 });
 
 // GET ('/api/cajas/:id/details) -> Mostramos caja
-router.get("/:id", async (req, res, next) => {
+router.get("/:id",isAuthenticated, async (req, res, next) => {
   const { id } = req.params;
-
+  const { _id } = req.payload
   try {
+    if (!id){
+      id = _id
+    }
     const response = await BoxModel.findById(id).populate("foods");
     res.json(response);
   } catch (error) {
