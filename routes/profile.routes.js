@@ -9,21 +9,19 @@ router.get("/:id",isAuthenticated, async (req, res, next) => {
     const { _id } = req.payload
     try {
         const profileUser = await UserModel.findById(_id)
-        console.log(profileUser)
-
-        res.json( "Perfil mostrado" )
+        res.json(profileUser)
 
     } catch(error) { next(error) }
 })
 
-// POST '/api/profile' -> Crea el perfil del usuario
-router.patch("/",isAuthenticated, uploader.single("image"), async (req, res, next) =>{
+// PATCH '/api/profile' -> Modificar el Perfil de Usuario
+router.patch("/:id/edit",isAuthenticated, uploader.single("image"), async (req, res, next) =>{
 
     const { username, email } = req.body
-    const { _id } = req.payload
+    const { id } = req.params
 
     try {
-        await UserModel.findByIdAndUpdate(_id, {
+        await UserModel.findByIdAndUpdate(id, {
             username,
             email,
             image: req.file.path
