@@ -4,10 +4,9 @@ const uploader = require("../middlewares/uploader")
 const isAuthenticated = require('../middlewares/isAuthenticated')
 
 // GET 'api/profile' -> Muestra el perfil
-router.get("/",isAuthenticated, async (req, res, next) => {
+router.get("/:id",isAuthenticated, async (req, res, next) => {
 
     const { _id } = req.payload
-    // _id = "6298f2cf00fd0d60d9eeabc6"
     try {
         const profileUser = await UserModel.findById(_id)
         console.log(profileUser)
@@ -18,7 +17,7 @@ router.get("/",isAuthenticated, async (req, res, next) => {
 })
 
 // POST '/api/profile' -> Crea el perfil del usuario
-router.post("/",isAuthenticated, uploader.single("image"), async (req, res, next) =>{
+router.patch("/",isAuthenticated, uploader.single("image"), async (req, res, next) =>{
 
     const { username, email } = req.body
     const { _id } = req.payload

@@ -4,9 +4,9 @@ const BoxModel = require("../models/Box.model");
 const FoodModel = require ('../models/Food.model')
 
 // POST  '/api/cajas/create' -> Creamos nueva caja
-router.post("/create", async (req, res, next) => {
+router.post("/create",isAuthenticated, async (req, res, next) => {
   const { name, boxmodel, foods, price } = req.body;
-
+  console.log(foods)
   try {
     const createBox = await BoxModel.create({
       name,
