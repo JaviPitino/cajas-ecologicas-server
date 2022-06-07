@@ -25,8 +25,6 @@ router.post("/create",isAuthenticated, async (req, res, next) => {
   }
 });
 
-
-
 // GET ('/api/cajas/:id/details) -> Mostramos caja
 router.get("/:id",isAuthenticated, async (req, res, next) => {
   const { id } = req.params;
