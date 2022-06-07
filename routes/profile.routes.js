@@ -17,18 +17,20 @@ router.get("/:id",isAuthenticated, async (req, res, next) => {
 // PATCH '/api/profile' -> Modificar el Perfil de Usuario
 router.patch("/:id/edit",isAuthenticated, uploader.single("image"), async (req, res, next) =>{
 
-    const { username, email } = req.body
+    const { username, email, image } = req.body
     const { id } = req.params
 
     try {
         await UserModel.findByIdAndUpdate(id, {
             username,
             email,
-            image: req.file.path
+            image
         })
-        res.json( "Perfil Actualizado" )
+        res.json( 'Perfil creado' )
 
     } catch(error) { next(error) }
 })
+
+
 
 module.exports = router;

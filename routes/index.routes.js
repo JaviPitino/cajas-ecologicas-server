@@ -21,4 +21,7 @@ router.use("/profile", profileRoutes)
 const boxRoutes = require("./box.routes.js")
 router.use("/cajas", boxRoutes)
 
+const uploaderRoutes = require("./uploader.routes.js")
+router.use("/uploader", uploaderRoutes)
+
 module.exports = router;
