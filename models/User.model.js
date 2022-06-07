@@ -17,8 +17,10 @@ const userSchema = new Schema(
       required: true,
       unique: true
     },
-    image: String,
-    
+    image: {
+      type: String,
+      default: "https://res.cloudinary.com/dikww9ljc/image/upload/v1654633124/EcoFood/farmer.jpg"
+    },
     location: String, // COORDENADAS DE LOCALIZACIÓN PARA FUTURA IMPLEMENTACIÓN DE MAPAS
 
     role: {

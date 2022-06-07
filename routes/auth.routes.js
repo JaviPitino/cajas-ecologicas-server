@@ -8,7 +8,7 @@ const isAuthenticated = require("../middlewares/isAuthenticated.js");
 
 // POST '/api/auth/signup' => Registramos al usuario
 router.post("/signup", async (req, res, next) => {
-  const { email, password, username } = req.body;
+  const { email, password, username, role } = req.body;
 
   //! AQUI REALIZAMOS LA VALIDACIÓN BACKEND
 
@@ -46,6 +46,8 @@ router.post("/signup", async (req, res, next) => {
       username,
       email,
       password: hashPassword,
+      // image: req.file.path,
+      role,
     });
     res.status(201).json()
   } catch (error) {

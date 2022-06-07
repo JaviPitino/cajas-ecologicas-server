@@ -20,7 +20,11 @@ const boxSchema = new Schema (
       type: Schema.Types.ObjectId,
       ref: "Food"
     }],
-    price: Number
+    price: Number,
+    image:{
+      type: String,
+      default: "https://res.cloudinary.com/dikww9ljc/image/upload/v1654632560/EcoFood/caja_ecologica_xkkzoo.png"
+    }
 }
 )
 
