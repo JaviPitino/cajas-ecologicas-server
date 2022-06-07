@@ -24,7 +24,6 @@ const userSchema = new Schema(
     role: {
       type: String,
       enum: ["admin", "client", "farmer"],// ROL POR EL QUE SE GESTIONARAN ALGUNAS VISTAS
-      default: "client"
     }
   },
   {
