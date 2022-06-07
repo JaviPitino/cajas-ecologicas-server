@@ -5,6 +5,47 @@ const FoodModel = require ('../models/Food.model');
 const { findById } = require("../models/User.model");
 const UserModel = require ('../models/User.model')
 
+//GET '/api/cajas/:id/' => Renderizamos las caja segun id payload del Farmer
+router.get('/', isAuthenticated, async (req, res, next) => {
+  
+  const { _id } = req.payload
+  
+  try {
+    
+    const findBox = await BoxModel.find({"farmer":_id})
+    console.log(findBox)
+    res.json(findBox)
+  } catch (error) {
+    next (error)
+  }
+})
+
+//GET '/api/cajas/:id/' => Renderizamos las caja segun id payload del Cliente
+router.get('/', isAuthenticated, async (req, res, next) => {
+  
+  const { _id } = req.payload
+  try {
+    const findBox = await BoxModel.find({"client":_id})
+    console.log(findBox)
+    res.json(findBox)
+  } catch (error) {
+    next (error)
+  }
+})
+
+//GET //GET '/api/cajas/:id' => Cliente quiere ver las cajas segun id del Farmer
+router.get('/:id/cajas', isAuthenticated, async (req, res, next) => {
+  
+  const { id } = req.params
+  console.log("el id del farmer dinamico",id)
+  try {
+    const findBox = await BoxModel.find({"farmer":id})
+    console.log(findBox)
+    res.json(findBox)
+  } catch (error) {
+    next (error)
+  }
+})
 
 
 // POST  '/api/cajas/create' -> Creamos nueva caja
@@ -25,16 +66,10 @@ router.post("/create",isAuthenticated, async (req, res, next) => {
   }
 });
 
-
-
 // GET ('/api/cajas/:id/details) -> Mostramos caja
 router.get("/:id",isAuthenticated, async (req, res, next) => {
   const { id } = req.params;
-  const { _id } = req.payload
   try {
-    if (!id){
-      id = _id
-    }
     const response = await BoxModel.findById(id).populate("foods");
     res.json(response);
   } catch (error) {
@@ -42,17 +77,6 @@ router.get("/:id",isAuthenticated, async (req, res, next) => {
   }
 });
 
-//POST '/api/cajas/:id/cliente' => Renderizamos las caja segun id payload
-router.post('/:id/cajas', isAuthenticated, async (req, res, next) => {
-  const {  _id } = req.payload
-  const { id } = req.params
-  try {
-    const findBox = await BoxModel.findById(id).select(_id)
-    res.json(findBox)
-  } catch (error) {
-    next (error)
-  }
-})
 
 // PATCH ‘/api/cajas/:id/edit’ -> Editamos Caja
 router.patch("/:id", async (req, res, next) => {
