@@ -1,7 +1,22 @@
 const router = require("express").Router();
 const isAuthenticated = require("../middlewares/isAuthenticated");
 const BoxModel = require("../models/Box.model");
+const { findOneAndUpdate, findByIdAndUpdate } = require("../models/Food.model");
 const FoodModel = require ('../models/Food.model')
+
+
+// GET ('/api/cajas') -> Renderizar todas las cajas
+router.get("/", isAuthenticated, async (req, res, next) => {
+
+  try {
+    const response = await BoxModel.find()
+    res.json(response) 
+
+  } catch(error) {
+    next(error);
+  }
+})
+
 
 // POST  '/api/cajas/create' -> Creamos nueva caja
 router.post("/create",isAuthenticated, async (req, res, next) => {

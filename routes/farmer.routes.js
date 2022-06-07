@@ -26,10 +26,14 @@ router.get('/',isAuthenticated, async (req, res, next) => {
 })
 
 // GET '/api/agricultores/:id/cajas -> Renderizamos las cajas de cada agricultor
-router.get('/:id/cajas', async (req, res, next) => {
+router.get('/:id/cajas', isAuthenticated, async (req, res, next) => {
 
   const { id } = req.params
-  
+  const { _id } = req.payload
+
+  if ( !id ) {
+    id = _id
+  }
 
   try {
     
