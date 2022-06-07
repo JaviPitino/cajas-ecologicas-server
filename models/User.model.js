@@ -18,14 +18,6 @@ const userSchema = new Schema(
       unique: true
     },
     image: String,
-    clients:[{
-      type: Schema.Types.ObjectId,
-      ref: "User"
-    }],
-    boxes:[{
-      type: Schema.Types.ObjectId,
-      ref: "Box"
-    }],
     
     location: String, // COORDENADAS DE LOCALIZACIÓN PARA FUTURA IMPLEMENTACIÓN DE MAPAS
 

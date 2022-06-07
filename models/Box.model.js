@@ -12,10 +12,10 @@ const boxSchema = new Schema (
       type: Schema.Types.ObjectId,
       ref: "User"
     }],
-    farmer: [{
+    farmer: {
       type: Schema.Types.ObjectId,
       ref: "User"
-    }],
+    },
     foods: [{
       type: Schema.Types.ObjectId,
       ref: "Food"
