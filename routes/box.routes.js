@@ -1,21 +1,10 @@
 const router = require("express").Router();
 const isAuthenticated = require("../middlewares/isAuthenticated");
 const BoxModel = require("../models/Box.model");
-const { findOneAndUpdate, findByIdAndUpdate } = require("../models/Food.model");
-const FoodModel = require ('../models/Food.model')
+const FoodModel = require ('../models/Food.model');
+const { findById } = require("../models/User.model");
+const UserModel = require ('../models/User.model')
 
-
-// GET ('/api/cajas') -> Renderizar todas las cajas
-router.get("/", isAuthenticated, async (req, res, next) => {
-
-  try {
-    const response = await BoxModel.find()
-    res.json(response) 
-
-  } catch(error) {
-    next(error);
-  }
-})
 
 
 // POST  '/api/cajas/create' -> Creamos nueva caja
@@ -36,6 +25,8 @@ router.post("/create",isAuthenticated, async (req, res, next) => {
   }
 });
 
+
+
 // GET ('/api/cajas/:id/details) -> Mostramos caja
 router.get("/:id",isAuthenticated, async (req, res, next) => {
   const { id } = req.params;
@@ -50,6 +41,18 @@ router.get("/:id",isAuthenticated, async (req, res, next) => {
     next(error);
   }
 });
+
+//POST '/api/cajas/:id/cliente' => Renderizamos las caja segun id payload
+router.post('/:id/cajas', isAuthenticated, async (req, res, next) => {
+  const {  _id } = req.payload
+  const { id } = req.params
+  try {
+    const findBox = await BoxModel.findById(id).select(_id)
+    res.json(findBox)
+  } catch (error) {
+    next (error)
+  }
+})
 
 // PATCH ‘/api/cajas/:id/edit’ -> Editamos Caja
 router.patch("/:id", async (req, res, next) => {
