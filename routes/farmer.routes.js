@@ -5,7 +5,7 @@ const isAuthenticated = require("../middlewares/isAuthenticated")
 //GET '/api/agricultores' => Renderizamos la lista de Agricultores para los Clientes
 router.get('/', async (req, res, next) => {
   try {
-    const response = await UserModel.find({role : "farmer"}).select("username") // Buscamos sólo por el Role de Farmer, para mostrar la lista
+    const response = await UserModel.find({role : "farmer"})// Buscamos sólo por el Role de Farmer, para mostrar la lista
     res.json(response)
   } catch (error) {
     next (error)
@@ -25,26 +25,26 @@ router.get('/',isAuthenticated, async (req, res, next) => {
   }
 })
 
-// GET '/api/agricultores/:id/cajas -> Renderizamos las cajas de cada agricultor
-router.get('/:id/cajas', isAuthenticated, async (req, res, next) => {
+// // GET '/api/agricultores/:id/cajas -> Renderizamos las cajas de cada agricultor
+// router.get('/:id/cajas', isAuthenticated, async (req, res, next) => {
 
-  const { id } = req.params
-  const { _id } = req.payload
+//   const { id } = req.params
+//   const { _id } = req.payload
 
-  if ( !id ) {
-    id = _id
-  }
+//   if ( !id ) {
+//     id = _id
+//   }
 
-  try {
+//   try {
     
-    const response = await UserModel.findById( id ).populate("boxes")
-    console.log("Response es:", response.boxes)
-    if (response.boxes === []){
-      res.status(401).json({errorMessage:"No tiene ninguna caja"})
-    }
-    res.json(response.boxes)
+//     const response = await UserModel.findById( id ).populate("boxes")
+//     console.log("Response es:", response.boxes)
+//     if (response.boxes === []){
+//       res.status(401).json({errorMessage:"No tiene ninguna caja"})
+//     }
+//     res.json(response.boxes)
 
-  } catch(error) { next(error) }
-})
+//   } catch(error) { next(error) }
+// })
 
 module.exports = router;

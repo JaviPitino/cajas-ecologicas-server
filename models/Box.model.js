@@ -6,7 +6,7 @@ const boxSchema = new Schema (
     name: String,
     boxmodel: {
       type: String,
-      enum: ["small", "medium", "big"]
+      enum: ["pequeña", "mediana", "grande"]
     },
     client: [{
       type: Schema.Types.ObjectId,

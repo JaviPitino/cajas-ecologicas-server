@@ -102,7 +102,7 @@ router.delete("/:id", async (req, res, next) => {
   const { id } = req.params;
 
   try {
-    await BoxModel.findOneAndDelete(id);
+    await BoxModel.findByIdAndDelete(id);
     res.json("La caja ha sido borrada");
   } catch (error) {
     next(error);
