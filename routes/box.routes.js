@@ -2,8 +2,9 @@ const router = require("express").Router();
 const isAuthenticated = require("../middlewares/isAuthenticated");
 const BoxModel = require("../models/Box.model");
 const FoodModel = require ('../models/Food.model');
-const { findById } = require("../models/User.model");
+const { rawListeners } = require("../models/User.model");
 const UserModel = require ('../models/User.model')
+const stripe = require("stripe")('sk_test_51L8NSLFGCln7R4wfjSu4H4AeGeRecUEl7SFCDWA0LuqJWbWTf7r3KbpHk3N6vV4thXE3NEcudPDXUDHaLuFMfd9a00Vcl0YKRh');
 
 //GET '/api/cajas/:id/' => Renderizamos las caja segun id payload del Farmer
 router.get('/', isAuthenticated, async (req, res, next) => {
@@ -13,7 +14,6 @@ router.get('/', isAuthenticated, async (req, res, next) => {
   try {
     
     const findBox = await BoxModel.find({"farmer":_id})
-    console.log(findBox)
     res.json(findBox)
   } catch (error) {
     next (error)
@@ -21,7 +21,7 @@ router.get('/', isAuthenticated, async (req, res, next) => {
 })
 
 //GET '/api/cajas/:id/' => Renderizamos las caja segun id payload del Cliente
-router.get('/', isAuthenticated, async (req, res, next) => {
+router.get('/miscajas', isAuthenticated, async (req, res, next) => {
   
   const { _id } = req.payload
   try {
@@ -33,7 +33,8 @@ router.get('/', isAuthenticated, async (req, res, next) => {
   }
 })
 
-//GET //GET '/api/cajas/:id' => Cliente quiere ver las cajas segun id del Farmer
+
+//GET '/api/cajas/:id' => Cliente quiere ver las cajas segun id del Farmer
 router.get('/:id/cajas', isAuthenticated, async (req, res, next) => {
   
   const { id } = req.params
@@ -46,6 +47,37 @@ router.get('/:id/cajas', isAuthenticated, async (req, res, next) => {
     next (error)
   }
 })
+
+//! PASARELA DE PAGO
+
+const calculateOrderAmount = (items) => {
+  // Replace this constant with a calculation of the order's amount
+  // Calculate the order total on the server to prevent
+  // people from directly manipulating the amount on the client
+  return 1400;
+};
+
+
+router.post("/create-payment-intent", async (req, res) => {
+  const { items } = req.body;
+  try {
+    const response = await BoxModel.findById(items._id)
+    // Create a PaymentIntent with the order amount and currency
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: response.price * 100,
+      currency: "eur",
+      automatic_payment_methods: {
+      enabled: true,
+      },
+    });
+
+    res.send({
+      clientSecret: paymentIntent.client_secret,
+    });
+  } catch (error) {
+    next(error)
+  }
+});
 
 
 // POST  '/api/cajas/create' -> Creamos nueva caja
@@ -79,7 +111,7 @@ router.get("/:id",isAuthenticated, async (req, res, next) => {
 
 
 // PATCH ‘/api/cajas/:id/edit’ -> Editamos Caja
-router.patch("/:id", async (req, res, next) => {
+router.patch("/:id",isAuthenticated, async (req, res, next) => {
   const { id } = req.params;
   const { name, boxmodel, foods, price } = req.body;
 
@@ -90,6 +122,7 @@ router.patch("/:id", async (req, res, next) => {
       boxmodel,
       foods,
       price,
+      client: req.payload._id
     });
     res.status(200).json(allFoods);
   } catch (error) {
@@ -98,7 +131,7 @@ router.patch("/:id", async (req, res, next) => {
 });
 
 // DELETE '/api/caja/:id/delete -> Borramos caja
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id",isAuthenticated, async (req, res, next) => {
   const { id } = req.params;
 
   try {
