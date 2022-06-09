@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const FoodModel = require("../models/Food.model.js")
-const uploader = require("../middlewares/uploader")
+const uploader = require("../middlewares/uploader");
+const isAuthenticated = require("../middlewares/isAuthenticated.js");
 
 //GET '/api/alimentos' => Renderizamos la lista de alimentos
 router.get('/', async (req, res, next) => {
@@ -14,8 +15,8 @@ router.get('/', async (req, res, next) => {
 })
 
 // POST '/api/alimentos => Añadir un nuevo alimento
-router.post('/',uploader.single("image"), async (req, res, next) => {
-  const { name, type, season} = req.body
+router.post('/',isAuthenticated, uploader.single("image"), async (req, res, next) => {
+  const { name, type, season, image} = req.body
   try {
     //Controlamos que el alimento no se repita por nombre
     const foundFood = await FoodModel.findOne({name})
@@ -26,7 +27,7 @@ router.post('/',uploader.single("image"), async (req, res, next) => {
     //Creamos un nuevo alimento que será añadido a la lista
     const response = await FoodModel.create({
       name,
-      image: req.file.path,
+      image,
       type,
       season
     })
@@ -49,14 +50,14 @@ router.get('/:id', async (req, res, next) => {
 })
 
 //PATCH '/api/alimentos/:id' => Editamos el alimento
-router.patch('/:id', uploader.single("image"), async (req, res, next) => {
+router.patch('/:id',isAuthenticated, uploader.single("image"), async (req, res, next) => {
   const { id } = req.params
-  const { name, type, season } = req.body
+  const { name, type, season, image } = req.body
 
   try {
     await FoodModel.findByIdAndUpdate(id,{
     name,
-    image: req.file.path,
+    image,
     type,
     season
   })
@@ -67,7 +68,7 @@ router.patch('/:id', uploader.single("image"), async (req, res, next) => {
 })
 
 //DELETE '/api/alimentos/:id' => Borrado de un alimento de nuestr lista
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id',isAuthenticated, async (req, res, next) => {
   const { id } = req.params
   try{
     await FoodModel.findByIdAndDelete(id)
