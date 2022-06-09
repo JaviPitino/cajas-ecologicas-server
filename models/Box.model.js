@@ -23,7 +23,7 @@ const boxSchema = new Schema (
     price: Number,
     image:{
       type: String,
-      default: "https://res.cloudinary.com/dikww9ljc/image/upload/v1654632560/EcoFood/caja_ecologica_xkkzoo.png"
+      default: "https://res.cloudinary.com/dikww9ljc/image/upload/v1654763386/EcoFood/caja-peque%C3%B1a-logo_uxp284.png"
     }
 }
 )
