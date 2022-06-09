@@ -109,22 +109,19 @@ router.get("/:id",isAuthenticated, async (req, res, next) => {
   }
 });
 
-// //PATCH '/api/cajas/:id/delteFood => Borramos una Food de la caja
-// router.patch('/:id/deleteFood', isAuthenticated, async (req, res, next) => {
-//   const { id } = req. params;
-//   const { _id } = req. body;
-//   console.log(_id)
-//   try {
-//     const box = await BoxModel.findByIdAndUpdate(id,{
-//       $pull: {foods: _id }
-//     })
+//PATCH '/api/cajas/:id/delteFood => Borramos una Food de la caja
+router.patch('/:idBox/:idFood/deleteFood', isAuthenticated, async (req, res, next) => {
+  const { idBox, idFood } = req. params;
   
-    
-//     res.json(deleteFood)
-//   } catch (error) {
-//     next(error)
-//   }
-// })
+  try {
+    await BoxModel.findByIdAndUpdate(idBox,{
+      $pull: {foods: idFood }
+    })
+    res.json("Alimento borrado")
+  } catch (error) {
+    next(error)
+  }
+})
 
 
 // PATCH ‘/api/cajas/:id/edit’ -> Editamos Caja
