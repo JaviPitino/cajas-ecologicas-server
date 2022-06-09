@@ -19,7 +19,7 @@ const userSchema = new Schema(
     },
     image: {
       type: String,
-      default: "https://res.cloudinary.com/dikww9ljc/image/upload/v1654633124/EcoFood/farmer.jpg"
+      default: "https://res.cloudinary.com/dikww9ljc/image/upload/v1654707358/EcoFood/pngwing.com_rrguil.png"
     },
     location: String, // COORDENADAS DE LOCALIZACIÓN PARA FUTURA IMPLEMENTACIÓN DE MAPAS
 
