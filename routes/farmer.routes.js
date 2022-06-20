@@ -25,26 +25,4 @@ router.get('/',isAuthenticated, async (req, res, next) => {
   }
 })
 
-// // GET '/api/agricultores/:id/cajas -> Renderizamos las cajas de cada agricultor
-// router.get('/:id/cajas', isAuthenticated, async (req, res, next) => {
-
-//   const { id } = req.params
-//   const { _id } = req.payload
-
-//   if ( !id ) {
-//     id = _id
-//   }
-
-//   try {
-    
-//     const response = await UserModel.findById( id ).populate("boxes")
-//     console.log("Response es:", response.boxes)
-//     if (response.boxes === []){
-//       res.status(401).json({errorMessage:"No tiene ninguna caja"})
-//     }
-//     res.json(response.boxes)
-
-//   } catch(error) { next(error) }
-// })
-
 module.exports = router;

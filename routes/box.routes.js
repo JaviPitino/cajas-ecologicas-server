@@ -26,7 +26,6 @@ router.get('/miscajas', isAuthenticated, async (req, res, next) => {
   const { _id } = req.payload
   try {
     const findBox = await BoxModel.find({"client":_id})
-    console.log(findBox)
     res.json(findBox)
   } catch (error) {
     next (error)
@@ -38,10 +37,8 @@ router.get('/miscajas', isAuthenticated, async (req, res, next) => {
 router.get('/:id/cajas', isAuthenticated, async (req, res, next) => {
   
   const { id } = req.params
-  console.log("el id del farmer dinamico",id)
   try {
     const findBox = await BoxModel.find({"farmer":id})
-    console.log(findBox)
     res.json(findBox)
   } catch (error) {
     next (error)
@@ -132,9 +129,9 @@ router.patch("/:id",isAuthenticated, async (req, res, next) => {
   try {
     const allFoods = await FoodModel.find()
     await BoxModel.findByIdAndUpdate(id, {
+      push:{foods: foods._id},
       name,
       boxmodel,
-      foods,
       price,
       client: req.payload._id
     });
